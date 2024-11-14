@@ -21,25 +21,25 @@ const TodayHighlight = () => {
                     <div className="flex flex-col items-center">
                       <p className="text-sm text-muted-foreground">1회 - 만조</p>
                       <p className="poppins-medium scroll-m-20 text-lg font-semibold tracking-tight">
-                        05:48 <span className="ml-[1px]">am</span>
+                        05:48<span className="ml-[1px]">am</span>
                       </p>
                     </div>
                     <div className="flex flex-col items-center">
                       <p className="text-sm text-muted-foreground">1회 - 만조</p>
                       <p className="poppins-medium scroll-m-20 text-lg font-semibold tracking-tight">
-                        05:48 <span className="ml-[1px]">am</span>
+                        05:48<span className="ml-[1px]">am</span>
                       </p>
                     </div>
                     <div className="flex flex-col items-center">
                       <p className="text-sm text-muted-foreground">1회 - 만조</p>
                       <p className="poppins-medium scroll-m-20 text-lg font-semibold tracking-tight">
-                        05:48 <span className="ml-[1px]">am</span>
+                        05:48<span className="ml-[1px]">am</span>
                       </p>
                     </div>
                     <div className="flex flex-col items-center">
                       <p className="text-sm text-muted-foreground">1회 - 만조</p>
                       <p className="poppins-medium scroll-m-20 text-lg font-semibold tracking-tight">
-                        05:48 <span className="ml-[1px]">am</span>
+                        05:48<span className="ml-[1px]">am</span>
                       </p>
                     </div>
                   </div>

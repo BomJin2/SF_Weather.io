@@ -9,6 +9,7 @@ export { HighlightsOption } from "./common/home/HighlightsOption";
 export { TodayHighlight } from "./common/home/TodayHighlight";
 export { WeekInfo } from "./common/home/WeekInfo";
 export { SevenDays } from "./common/home/SevenDays";
+export { HourlyInfo } from "./common/home/HourlyInfo";
 
 /** UI 기초 컴포넌트 */
 

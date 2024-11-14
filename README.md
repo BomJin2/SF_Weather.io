@@ -6,3 +6,5 @@
 
 - `npm install react-kakao-maps-sdk`
 - 참고문서 : `https://react-kakao-maps-sdk.jaeseokim.dev/`
+
+4. HTTP 통신을 위한 라이브러리 설치 : `npm i axios`

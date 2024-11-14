@@ -20,7 +20,8 @@ const HighlightsOption = ({ title, Description, imgUrl, num, sign }: Props) => {
         <CardContent className="flex items-center justify-between">
           <img src={imgUrl} alt="" className="h-10 w-10" />
           <p className="poppins-medium scroll-m-20 tracking-tight text-3xl font-semibold">
-            {num} <span className="text-lg ml-1">{sign}</span>
+            {num}
+            <span className="text-lg ml-1">{sign}</span>
           </p>
         </CardContent>
       </Card>

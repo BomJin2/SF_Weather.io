@@ -1,7 +1,7 @@
 import { TodayCard, Header, Hourly, KakaoMap, TodayHighlight, SevenDays } from "@/components";
 import { Weather } from "@/types";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const defaultWeatherData: Weather = {
   current: {
@@ -72,7 +72,9 @@ function HomePage() {
       console.log("fetchApi 호출은 되었음");
     }
   };
-
+  useEffect(() => {
+    fetchApi();
+  }, []);
   return (
     <>
       <div className="page ">
@@ -82,7 +84,7 @@ function HomePage() {
             {/* 상단 3개 위젯 */}
             <div className="w-full flex items-center gap-6">
               <TodayCard data={weatherData} />
-              <Hourly />
+              <Hourly data={weatherData.forecast.forecastday[0]} />
               <KakaoMap />
             </div>
             {/* 하단 2개 위젯 */}

@@ -1,6 +1,16 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, HourlyInfo } from "@/components";
+import useFormmatedTime from "@/hooks/useFormmatedTime";
+import { ForecastDay, HourlyData } from "@/types";
 
-const Hourly = () => {
+interface Props {
+  data: ForecastDay;
+}
+
+const Hourly = ({ data }: Props) => {
+  if (!data || !data.hour) {
+    return <div>데이터를 불러오는 중</div>;
+  }
+
   return (
     <>
       <Card className="flex-1 max-w-[calc(50%-48px)] h-full">
@@ -9,13 +19,9 @@ const Hourly = () => {
           <CardDescription>오늘 현재 날씨를 조회하고 있습니다.</CardDescription>
         </CardHeader>
         <CardContent className="w-full flex gap-4 items-center overflow-x-scroll ">
-          <HourlyInfo time={"오후 1시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={17} />
-          <HourlyInfo time={"오후 2시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={20} />
-          <HourlyInfo time={"오후 3시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={22} />
-          <HourlyInfo time={"오후 4시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={22} />
-          <HourlyInfo time={"오후 5시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={20} />
-          <HourlyInfo time={"오후 6시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={18} />
-          <HourlyInfo time={"오후 7시"} imgUrl={"src/assets/icons/1030n.svg"} temperature={16} />
+          {data.hour.map((item: HourlyData) => {
+            return <HourlyInfo data={item} />;
+          })}
         </CardContent>
       </Card>
     </>

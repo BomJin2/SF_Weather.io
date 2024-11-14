@@ -1,5 +1,5 @@
 import { TodayCard, Header, Hourly, KakaoMap, TodayHighlight, SevenDays } from "@/components";
-import { Weather } from "@/types";
+import { ForecastDay, ForecastTideDay, Weather } from "@/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -48,8 +48,54 @@ const defaultWeatherData: Weather = {
   forecast: { forecastday: [] },
 };
 
+const defaultTideData: ForecastTideDay = {
+  astro: {
+    is_moon_up: 0,
+    is_sun_up: 0,
+    moon_illumination: 0,
+    moon_phase: "",
+    moonrise: "",
+    moonset: "",
+    sunrise: "",
+    sunset: "",
+  },
+  date: "",
+  date_epoch: 0,
+  day: {
+    avghumidity: 0,
+    avgtemp_c: 0,
+    avgtemp_f: 0,
+    avgvis_km: 0,
+    avgvis_miles: 0,
+    condition: { text: "", icon: "", code: 0 },
+    daily_chance_of_rain: 0,
+    daily_chance_of_snow: 0,
+    daily_will_it_rain: 0,
+    daily_will_it_snow: 0,
+    maxtemp_c: 0,
+    maxtemp_f: 0,
+    maxwind_kph: 0,
+    maxwind_mph: 0,
+    mintemp_c: 0,
+    mintemp_f: 0,
+    totalprecip_in: 0,
+    totalprecip_mm: 0,
+    totalsnow_cm: 0,
+    uv: 0,
+    tides: [
+      {
+        tide: [],
+      },
+    ],
+  },
+  hour: [],
+};
+
 function HomePage() {
   const [weatherData, setWeatherData] = useState(defaultWeatherData);
+  const [tideData, setTideData] = useState(defaultTideData);
+  const [oneWeek, setOneWeek] = useState([]);
+
   const fetchApi = async () => {
     const API_KEY = "82e890c6837844ea9e704743241411";
     const BASE_URL = "http://api.weatherapi.com/v1";
@@ -72,9 +118,58 @@ function HomePage() {
       console.log("fetchApi 호출은 되었음");
     }
   };
+
+  const fetchTideApi = async () => {
+    const API_KEY = "82e890c6837844ea9e704743241411";
+    const BASE_URL = "http://api.weatherapi.com/v1";
+    /** https://api.weatherapi.com/v1/marine.json?q=seoul&days=1&key=aaaaaaaaaaaaaa */
+    try {
+      const res = await axios.get(`${BASE_URL}/marine.json?q=seoul&days=1&key=${API_KEY}`);
+      console.log(res);
+
+      if (res.status === 200) {
+        setTideData(res.data.forecast.forecastday[0]);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      console.log("호출은 되었어용");
+    }
+  };
+
+  const getOneWeekWeather = async () => {
+    const API_KEY = "82e890c6837844ea9e704743241411";
+    const BASE_URL = "http://api.weatherapi.com/v1";
+    /** https://api.weatherapi.com/v1/marine.json?q=seoul&days=1&key=aaaaaaaaaaaaaa */
+    try {
+      const res = await axios.get(`${BASE_URL}/forecast.json?q=seoul&days=7&key=${API_KEY}`);
+      console.log(res);
+
+      if (res.status === 200) {
+        const newData = res.data.forecast.forecastday.map((item: ForecastDay) => {
+          return {
+            maxTemp: Math.round(item.day.maxtemp_c),
+            minTemp: Math.round(item.day.mintemp_c),
+            date: item.date_epoch,
+            iconCode: item.day.condition.code,
+            isDay: item.day.condition.icon.includes("day"),
+          };
+        });
+        setOneWeek(newData);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      console.log("호출은 되었어용");
+    }
+  };
+
   useEffect(() => {
     fetchApi();
+    fetchTideApi();
+    getOneWeekWeather();
   }, []);
+  console.log(tideData);
   return (
     <>
       <div className="page ">
@@ -89,8 +184,8 @@ function HomePage() {
             </div>
             {/* 하단 2개 위젯 */}
             <div className="w-full flex items-center gap-6">
-              <TodayHighlight />
-              <SevenDays />
+              <TodayHighlight tideData={tideData} currentData={weatherData} />
+              <SevenDays data={oneWeek} />
             </div>
           </div>
         </div>

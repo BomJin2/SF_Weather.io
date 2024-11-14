@@ -1,5 +1,4 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, HourlyInfo } from "@/components";
-import useFormmatedTime from "@/hooks/useFormmatedTime";
 import { ForecastDay, HourlyData } from "@/types";
 
 interface Props {

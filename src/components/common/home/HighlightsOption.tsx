@@ -5,7 +5,7 @@ interface Props {
   Description: string;
   imgUrl: string;
   num: number;
-  sign: string;
+  sign?: string;
 }
 
 const HighlightsOption = ({ title, Description, imgUrl, num, sign }: Props) => {
@@ -21,7 +21,7 @@ const HighlightsOption = ({ title, Description, imgUrl, num, sign }: Props) => {
           <img src={imgUrl} alt="" className="h-10 w-10" />
           <p className="poppins-medium scroll-m-20 tracking-tight text-3xl font-semibold">
             {num}
-            <span className="text-lg ml-1">{sign}</span>
+            {title === "체감온도" ? <span className="text-lg ml-1">&8451;</span> : <span className="text-lg ml-1">{sign}</span>}
           </p>
         </CardContent>
       </Card>

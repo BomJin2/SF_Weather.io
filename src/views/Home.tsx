@@ -4,10 +4,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import defaultTideData from "@/json/defaultTideData.json";
 import defaultWeatherData from "@/json/defaultWeatherData.json";
-
-console.log(defaultTideData);
+import { useAtom } from "jotai";
+import { cityNameAtom } from "@/stores";
 
 function HomePage() {
+  const [cityName, setCityName] = useAtom(cityNameAtom);
+
   const [tideData, setTideData] = useState<ForecastTideDay | any>(defaultTideData);
   const [weatherData, setWeatherData] = useState(defaultWeatherData);
   const [oneWeek, setOneWeek] = useState([]);
@@ -18,7 +20,7 @@ function HomePage() {
     try {
       /** Promise 인스턴스 방법을 사용했을 땐, resolve에 해당 */
       /** CRUD C: create -> post() R : read -> get() U : update -> put() D : delete -> delete() */
-      const res = await axios.get(`${BASE_URL}/forecast.json?q=seoul&days=7&key=${API_KEY}`);
+      const res = await axios.get(`${BASE_URL}/forecast.json?q=${cityName}&days=7&key=${API_KEY}`);
       // console.log(res);
 
       if (res.status === 200) {
@@ -82,7 +84,7 @@ function HomePage() {
     fetchApi();
     fetchTideApi();
     getOneWeekWeather();
-  }, []);
+  }, [cityName]);
   // console.log(tideData);
   return (
     <>
@@ -100,9 +102,6 @@ function HomePage() {
             <div className="w-full flex items-center gap-6">
               <TodayHighlight tideData={tideData} currentData={weatherData} />
               <SevenDays data={oneWeek} />
-            </div>
-            <div>
-              <h1>${JSON.stringify(defaultTideData, null, 2)}</h1>
             </div>
           </div>
         </div>
